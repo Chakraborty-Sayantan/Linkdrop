@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
 
-## Project info
+# LinkDrop
 
-**URL**: https://lovable.dev/projects/46bf6ce4-b30f-4a74-8c97-4eb76713ebb7
+LinkDrop is a web application that allows you to download videos and audio from hundreds of different online platforms. It's built with a modern tech stack, prioritizing speed, security, and a clean user experience.
 
-## How can I edit this code?
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- High-Quality Downloads: Download your favorite media in its original quality, or choose from a variety of formats and resolutions to suit your needs.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/46bf6ce4-b30f-4a74-8c97-4eb76713ebb7) and start prompting.
+- Lightning Fast: The optimized servers ensure that your downloads are processed and delivered to you as quickly as possible, regardless of the file size.
 
-Changes made via Lovable will be committed automatically to this repo.
+- Safe & Secure: Your privacy is a top priority. No data is stored, and all processing is handled securely.
 
-**Use your preferred IDE**
+- Universal Support: LinkDrop is compatible with hundreds of popular platforms, including YouTube, TikTok, Instagram, and many more.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Tech Stack
 
-Follow these steps:
+**Client:** Vite, TypeScript, React, shadcn-ui, Tailwind CSS
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+**Server:** Django, Django REST Framework, yt-dlp
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Deployment
+To get LinkDrop up and running on your local machine, follow these simple steps.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+  git clone https://github.com/Chakraborty-Sayantan/Linkdrop.git
+```
+- Frontend Setup
+
+1. Navigate to the project directory:
+
+```bash
+  cd LinkDrop
+```
+2. Install the necessary dependencies:
+```bash
+  npm i
+```
+3. Start the development server:
+```bash
+  npm run dev
+```
+The frontend will now be running on http://localhost:8080.
+
+
+- Backend Setup
+1. Navigate to the backend directory:
+```bash
+  cd linkdrop_backend
+```
+2. Create and activate a virtual environment:
+
+macOS/Linux:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+Windows:
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+3. Install the required packages:
+```bash
+pip install -r requirements.txt
+```
+4. Run the Django development server:
+```bash
+python manage.py runserver
 ```
 
-**Edit a file directly in GitHub**
+The backend API will now be running on http://127.0.0.1:8000.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/46bf6ce4-b30f-4a74-8c97-4eb76713ebb7) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Now, with both the frontend and backend servers running, you can open your browser to http://localhost:8080 and start using LinkDrop!
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://sayantan.dpdns.org/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sayantan-c12/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/Sayantan_Codes)
