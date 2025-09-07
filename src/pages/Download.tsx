@@ -22,7 +22,7 @@ const Download = () => {
 
     try {
       // This is the new API call to your Django backend
-      const response = await fetch("http://127.0.0.1:8000/api/media/", {
+      const response = await fetch("/api/media/", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
