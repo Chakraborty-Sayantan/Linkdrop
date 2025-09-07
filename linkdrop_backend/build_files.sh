@@ -1,4 +1,13 @@
 #!/bin/bash
-pip install -r linkdrop_backend/requirements.txt
-python linkdrop_backend/manage.py migrate --no-input
-python linkdrop_backend/manage.py collectstatic --no-input --clear
+
+# Navigate into the backend directory
+cd linkdrop_backend
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Run database migrations
+python manage.py migrate --no-input
+
+# Collect static files
+python manage.py collectstatic --no-input --clear
