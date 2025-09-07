@@ -26,7 +26,7 @@ class MediaView(APIView):
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info_dict = ydl.extract_info(url, download=False)
 
-            # ... (The rest of the view logic remains the same) ...
+            
             formats = info_dict.get('formats', [])
             preview_url = next((f.get('url') for f in formats if f.get('vcodec') != 'none' and f.get('acodec') != 'none'), None)
             
@@ -55,7 +55,7 @@ class MediaView(APIView):
             traceback.print_exc()
             return Response({'error': 'An unexpected server error occurred.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    # --- Helper methods remain the same ---
+   
     def format_duration(self, seconds):
         if not seconds: return "N/A"
         try:
@@ -130,7 +130,7 @@ class MediaDownloadView(APIView):
         temp_dir = tempfile.mkdtemp()
         temp_file_path = os.path.join(temp_dir, "media")
 
-        # UPDATED: Removed browser cookie usage for the download process
+        
         ydl_opts = {
             'format': f'{video_format_id}+{audio_format_id}',
             'outtmpl': temp_file_path,
