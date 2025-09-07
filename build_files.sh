@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Navigate into the backend directory
+# Navigate into the backend directory first
 cd linkdrop_backend
 
 # Install Python dependencies
