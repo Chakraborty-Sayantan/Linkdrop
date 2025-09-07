@@ -98,9 +98,11 @@ USE_TZ = True
 
 # --- STATIC FILES CONFIG ---
 STATIC_URL = 'static/'
-# This is where Django will collect all static files
 STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
-# This is where Whitenoise will store static files
+# Add this line to tell collectstatic where to find your files
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# This should already be there
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
