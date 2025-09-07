@@ -103,6 +103,9 @@ export const MediaProcessor = ({ mediaData, onBack }: MediaProcessorProps) => {
     genre: "Pop", year: new Date().getFullYear().toString(), track: "1", comment: ""
   });
   const [timeRange, setTimeRange] = useState<TimeRange>({ start: "00:00", end: mediaData.duration || "00:00" });
+
+  // Use environment variable for the API URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
   useEffect(() => {
     setFilename(`${mediaData.title}.mp4`);
@@ -119,7 +122,7 @@ export const MediaProcessor = ({ mediaData, onBack }: MediaProcessorProps) => {
     setDownloadProgress(0);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/download/", {
+      const response = await fetch(`${API_BASE_URL}/download/`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           original_url: mediaData.original_url, video_format_id: format.format_id,
@@ -127,7 +130,11 @@ export const MediaProcessor = ({ mediaData, onBack }: MediaProcessorProps) => {
         }),
       });
 
-      if (!response.ok || !response.body) throw new Error(`Server error: ${response.statusText}`);
+      if (!response.ok || !response.body) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error: ${response.statusText}`);
+      }
+
 
       const contentLength = response.headers.get('Content-Length');
       const totalSize = contentLength ? parseInt(contentLength, 10) : 0;
@@ -138,11 +145,20 @@ export const MediaProcessor = ({ mediaData, onBack }: MediaProcessorProps) => {
         start(controller) {
           const push = () => {
             reader.read().then(({ done, value }) => {
-              if (done) { controller.close(); return; }
-              loadedSize += value.length;
-              if (totalSize > 0) setDownloadProgress((loadedSize / totalSize) * 100);
-              controller.enqueue(value);
+              if (done) { 
+                setDownloadProgress(100);
+                controller.close(); 
+                return; 
+              }
+              if (value) {
+                loadedSize += value.length;
+                if (totalSize > 0) setDownloadProgress((loadedSize / totalSize) * 100);
+                controller.enqueue(value);
+              }
               push();
+            }).catch(error => {
+              console.error('Stream reading error:', error);
+              controller.error(error);
             });
           };
           push();
@@ -158,11 +174,22 @@ export const MediaProcessor = ({ mediaData, onBack }: MediaProcessorProps) => {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Download Complete!",
+        description: `${filename} has been saved.`,
+      });
 
     } catch (error) {
-      toast({ variant: "destructive", title: "Download Failed" });
+      console.error("Download failed:", error);
+      toast({ 
+        variant: "destructive", 
+        title: "Download Failed",
+        description: error instanceof Error ? error.message : "An unknown error occurred.",
+      });
     } finally {
       setDownloading(null);
+      setDownloadProgress(0);
     }
   };
 

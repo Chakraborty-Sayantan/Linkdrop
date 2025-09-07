@@ -9,13 +9,6 @@ import tempfile
 import os
 import shutil
 
-# --- IMPORTANT: Configure your browser here ---
-# Choose the browser where you are logged into the websites.
-# Common options: 'chrome', 'firefox', 'brave', 'edge', 'opera', 'vivaldi'
-# If you use a specific Chrome profile, it might be: ('chrome', 'Profile 1')
-BROWSER_TO_USE_COOKIES_FROM = ('brave',)
-
-
 class MediaView(APIView):
     def post(self, request, *args, **kwargs):
         url = request.data.get('url')
@@ -23,12 +16,11 @@ class MediaView(APIView):
             return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # UPDATED: Added cookiesfrombrowser and age-limit bypass
+            # UPDATED: Removed cookiesfrombrowser and added age-limit bypass
             ydl_opts = {
                 'quiet': True,
                 'no_warnings': True,
                 'noplaylist': True,
-                'cookiesfrombrowser': BROWSER_TO_USE_COOKIES_FROM,
                 'age_limit': 99, # Bypass age verification prompts
             }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -138,12 +130,11 @@ class MediaDownloadView(APIView):
         temp_dir = tempfile.mkdtemp()
         temp_file_path = os.path.join(temp_dir, "media")
 
-        # UPDATED: Also use browser cookies for the download process
+        # UPDATED: Removed browser cookie usage for the download process
         ydl_opts = {
             'format': f'{video_format_id}+{audio_format_id}',
             'outtmpl': temp_file_path,
             'merge_output_format': 'mp4',
-            'cookiesfrombrowser': BROWSER_TO_USE_COOKIES_FROM,
         }
 
         try:

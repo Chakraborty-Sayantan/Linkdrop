@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { MediaProcessor } from "@/components/MediaProcessor";
-import { useToast } from "@/components/ui/use-toast"; // Import the toast hook for notifications
+import { useToast } from "@/components/ui/use-toast";
 
 const Download = () => {
   const navigate = useNavigate();
@@ -14,15 +14,17 @@ const Download = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [mediaData, setMediaData] = useState(null);
 
+  // Use environment variable for the API URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const handleDownload = async () => {
     if (!url.trim()) return;
     
     setIsProcessing(true);
-    setMediaData(null); // Clear previous data
+    setMediaData(null);
 
     try {
-      // This is the new API call to your Django backend
-      const response = await fetch("/api/media/", {
+      const response = await fetch(`${API_BASE_URL}/media/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,7 +33,8 @@ const Download = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -42,7 +45,7 @@ const Download = () => {
       toast({
         variant: "destructive",
         title: "An Error Occurred",
-        description: "Could not connect to the backend. Please ensure it's running.",
+        description: error instanceof Error ? error.message : "Could not process the link.",
       });
     } finally {
       setIsProcessing(false);
