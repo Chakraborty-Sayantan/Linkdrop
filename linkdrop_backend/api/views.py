@@ -20,12 +20,17 @@ class MediaView(APIView):
             return Response({'error': 'URL is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # UPDATED: Removed cookiesfrombrowser and added age-limit bypass
+            # UPDATED YDL OPTIONS
             ydl_opts = {
                 'quiet': True,
                 'no_warnings': True,
                 'noplaylist': True,
-                'age_limit': 99, # Bypass age verification prompts
+                'age_limit': 99,
+                # Add a common User-Agent to mimic a browser request
+                'http_headers': {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+                    'Accept-Language': 'en-US,en;q=0.5',
+                },
             }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info_dict = ydl.extract_info(url, download=False)

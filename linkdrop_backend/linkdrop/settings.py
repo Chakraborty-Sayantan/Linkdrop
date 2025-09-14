@@ -112,7 +112,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
-   "https://linkdrop-iota.vercel.app/",
+   "https://linkdrop-iota.vercel.app",
 ]
 
 # Allow any Vercel preview URL to connect to your backend
