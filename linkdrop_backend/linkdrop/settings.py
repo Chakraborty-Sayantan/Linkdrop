@@ -13,8 +13,9 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     '127.0.0.1', 
-    '.vercel.app'
-    'linkdrop-backend.onrender.com'
+    '.vercel.app',
+    'linkdrop-backend.onrender.com',
+    '.onrender.com', 
     ]
 
 
@@ -111,5 +112,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
-   "https://linkdrop-iota.vercel.app/"
+   "https://linkdrop-iota.vercel.app/",
+]
+
+# Allow any Vercel preview URL to connect to your backend
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https?:\/\/(.+\.)?vercel\.app$",
+]
+
+# It's also a good idea to set CSRF_TRUSTED_ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    "https://linkdrop-iota.vercel.app",
 ]

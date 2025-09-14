@@ -2,12 +2,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import FileResponse
+from django.http import JsonResponse
 import yt_dlp
 import re
 import traceback
 import tempfile
 import os
 import shutil
+
+def health_check(request):
+    return JsonResponse({"status": "ok", "message": "Backend is running!"})
 
 class MediaView(APIView):
     def post(self, request, *args, **kwargs):
