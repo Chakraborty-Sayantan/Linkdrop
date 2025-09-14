@@ -26,6 +26,7 @@ class MediaView(APIView):
                 'no_warnings': True,
                 'noplaylist': True,
                 'age_limit': 99,
+                'force_ip': '4',
                 # Add a common User-Agent to mimic a browser request
                 'http_headers': {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
